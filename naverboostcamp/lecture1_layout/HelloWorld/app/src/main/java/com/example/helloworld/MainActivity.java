@@ -16,20 +16,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void onButton1Clicked(View v){
+    public void onButton1Clicked(View v) {
         Toast.makeText(
                 getApplicationContext(), "버튼이 눌렸습니다.", Toast.LENGTH_LONG).show();
     }
 
-    public void onButton2Clicked(View view){
+    public void onButton2Clicked(View view) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://m.naver.com"));
         startActivity(intent);
     }
 
-    public void clickclick(View view){
+    public void clickclick(View view) {
         Toast.makeText(getApplicationContext(), "moved", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.woodongs.site"));
         startActivity(intent);
     }
-
 }
