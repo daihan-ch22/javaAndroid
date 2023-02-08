@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -81,6 +83,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        View view2 = findViewById(R.id.view2);
+        view2.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                detector.onTouchEvent(motionEvent);
+                return true;
+            }
+        });
+    }
+
+    /**
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            Toast.makeText(this, "Pressed System Back Button.", Toast.LENGTH_LONG).show();
+            return true;
+        }
+        return false;
     }
 
     public void println(String data) {
