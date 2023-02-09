@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 System.out.println("YesClicked");
+                System.exit(1);
             }
         });
         dialogBuilder.setTitle("TITLE");
