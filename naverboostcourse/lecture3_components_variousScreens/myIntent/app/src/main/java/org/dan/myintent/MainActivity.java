@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 /* <액티비티 새로 생성하고 구성하는 방식>
 * 1. 새로운 액티비티 생성
@@ -20,6 +21,9 @@ import android.widget.Toast;
 * 5. 메인 액티비티에서 응답 처리하기
 * */
 public class MainActivity extends AppCompatActivity {
+
+    TextView tv;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +45,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        tv = (TextView) findViewById(R.id.textView);
 
         if(requestCode == 101) {
             String name = data.getStringExtra("name"); //MenuActivity [ name - value ]
             Toast.makeText(getApplicationContext(), "call backed from: " + name, Toast.LENGTH_SHORT).show();
-        }
+
+        } /*else {
+            String s = data.getStringExtra("editTextInput");
+            tv.setText(s);
+        }*/
     }
 }
