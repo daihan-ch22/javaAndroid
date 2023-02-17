@@ -66,7 +66,7 @@ StartActivity / StartActivityResult
 
 [StartActivityResult - Deprecated]
 ```
-setResult(Intent Object) 해서 넘어온 결과가 아래에 걸림 세트로 생각
+setResult(RESULT_CODE , Intent_Object) 해서 넘어온 결과가 아래에 걸림 세트로 생각
 
 
 ActivityResultLauncher<Intent> resultLauncher = registerForActivityResult(
