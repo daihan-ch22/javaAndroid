@@ -63,10 +63,30 @@ foo.xml ------ CONNECT ------ foo_activity.java
 
 StartActivity / StartActivityResult
 
+
+[StartActivityResult - Deprecated]
+```
+setResult(Intent Object) 해서 넘어온 결과가 아래에 걸림 세트로 생각
+
+
+ActivityResultLauncher<Intent> resultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult() , result ->
+            {
+                if(result.getResultCode() == RESULT_OK){
+                    //LOGICS TO BE WRITTEN HERE
+                }
+            });
+```
+
+
+
+<br><br>
 ### Service
 
 * startService() / onCreate() / onDestroy()
 * UI가 없다(안보임)
+
+<br><br>
 
 ### Broadcast Receiver
 * 전화나 SMS메시지, 채팅 (전화 / 채팅이 왔습니다 == Global Event를 처리하기 위함) 
@@ -117,7 +137,13 @@ private SmsMessage[] parseSmsMessage(Bundle bundle){
     * 중간에 취소하면 다음 수신자는 받지 못한다. 
     * 순서는 Intent Filter 속성으로 정할 수 있고 순서가 같으면 랜덤 실행 
 
+
+<br><br>
+
 ### Content Provider
 
+<br><br>
+
 ### Intent
+
 putExtra() / Parcelable / Serializable 
