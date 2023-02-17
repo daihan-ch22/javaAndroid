@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId "org.dan.mysmsreceiver"
         minSdk 24
-        targetSdk 22
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
