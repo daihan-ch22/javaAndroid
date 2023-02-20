@@ -147,3 +147,36 @@ private SmsMessage[] parseSmsMessage(Bundle bundle){
 ### Intent
 
 putExtra() / Parcelable / Serializable 
+
+
+
+<br><br>
+
+### Fragment
+- Activity처럼 xml과 Java파일이 한 쌍으로 연결 
+- java에서는 Fragment를 상속받고 onCreateView를 오버라이딩해서 재정의한다. 
+- 이 안에서 xml 만든것을 Inflation해서 리턴 시키면 콜백 함수가 된다. 
+- 인플레이션을 수동으로 해줘야함 (콜백 함수 - setContent없다. 액티비티가 아님
+- fragment는 실제 뷰는 아니고 부분화면을 담기위한 틀이라고 보면 됨
+- 액티비티가 아니다보니 가볍고 보안상 이점이 있는듯 
+- fragment끼리 서로 접근하면 안된다. (액티비티에서 메서드를 만들어 그걸로 왓다갔다)
+  )
+
+fragment를 추가하는데는 2가지 방법이 있음.
+    1. xml - java Inflation
+    2. Java - new 연산자로 새로운 객체를 만들어 추가
+
+    방법 1
+    인플레이션을 수동으로 해줘야함 (콜백 함수 - setContent없다. 액티비티가 아니라서)
+    fragment는 실제 뷰는 아니고 부분화면을 담기위한 틀이라고 보면 됨
+
+    방법 2
+    new로 객체를 만든 다음에 
+    FragmentManager가 관리하도록 한다. 
+    매니저 부르고 -> transaction시작 -> 프래그먼트 컨테이너(id지정한영역)에 프래그먼트를 올리고 -> 시작(commit)
+
+    ```java
+    MainFragment fragment1 = new MainFragment();
+                getSupportFragmentManager().beginTransaction().add(R.id.container, fragment1).commit();
+    ```
+
