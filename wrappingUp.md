@@ -180,3 +180,18 @@ fragment를 추가하는데는 2가지 방법이 있음.
                 getSupportFragmentManager().beginTransaction().add(R.id.container, fragment1).commit();
     ```
 
+
+
+### 안드로이드 메뉴는  옵션메뉴와 Context메뉴로 나눌 수 있다.
+
+- res폴더에 menu directory만들고 거기에 xml파일로 메뉴내용물 정의 가능 
+- 그리고 그걸 MainActivity에서 onCreateOptionMenu를 오버라이딩해서 인플레이션 한다. 
+
+```java
+@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+```
+
