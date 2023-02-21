@@ -146,7 +146,11 @@ private SmsMessage[] parseSmsMessage(Bundle bundle){
 
 ### Intent
 
-putExtra() / Parcelable / Serializable 
+putExtra() / 
+
+[객체전달용] Parcelable / Serializable *Parcelable이 훨씬 빠른데 전부 구현해야함 
+
+비슷한것으로 Bundle클래스가 있는데 Intent: 데이터를 전달하기 위한 목적 / Bundle: 데이터를 저장하고 활용할 목적 (Map<>형식)
 
 
 
