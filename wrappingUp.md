@@ -150,7 +150,7 @@ putExtra() /
 
 [객체전달용] Parcelable / Serializable *Parcelable이 훨씬 빠른데 전부 구현해야함 
 
-비슷한것으로 Bundle클래스가 있는데 Intent: 데이터를 전달하기 위한 목적 / Bundle: 데이터를 저장하고 활용할 목적 (Map<>형식)
+비슷한것으로 Bundle클래스가 있는데 Intent: 데이터를 전달하기 위한 목적(어차피 내부적으로 Bundle에 담아서 보냄) / Bundle: 데이터를 저장하고 활용할 목적(상태저장/복구 등) (Map<>형식)
 
 
 
@@ -199,3 +199,8 @@ fragment를 추가하는데는 2가지 방법이 있음.
     }
 ```
 
+
+
+### ViewPager2
+- ViewPager2가 ViewPager에 비해 향상됨. 다만 RecyclerView처럼 adapter를 만들어서 거기서 실제 데이터랑 붙이는 식으로 사용함
+- PageTitleStrip (현재 어디 위치에 있는지 그림으로 보여주는것) - ViewPager2에서는 아직 지원을 하지 않아서 TabLayout을 우회해서 사용함. 

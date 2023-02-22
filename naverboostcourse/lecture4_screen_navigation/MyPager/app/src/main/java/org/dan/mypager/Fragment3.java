@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-class Fragment3 extends androidx.fragment.app.Fragment {
+public class Fragment3 extends androidx.fragment.app.Fragment {
 
     @Nullable
     @Override
