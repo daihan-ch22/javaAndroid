@@ -184,6 +184,10 @@ fragment를 추가하는데는 2가지 방법이 있음.
                 getSupportFragmentManager().beginTransaction().add(R.id.container, fragment1).commit();
     ```
 
+- fragment 에서 activity로 데이터를 보내거나 할때 인터페이스가 적극적으로 쓰임 (프래그먼트에 있는 버튼을 누르면 액티비티의 버튼내용이 바꾸는것 처럼 )
+- activity에서는 fragment객체를 바로 참조할 수 있음. 
+- 데이터를 받아오는 작업은 왠만하면 activity쪽에서 하는게 좋다. 
+
 
 
 ### 안드로이드 메뉴는  옵션메뉴와 Context메뉴로 나눌 수 있다.
@@ -202,5 +206,6 @@ fragment를 추가하는데는 2가지 방법이 있음.
 
 
 ### ViewPager2
+- 프래그먼트를 스크롤하면서 보는 화면 (각각의 프래그먼트에 뷰를 설정해놓는다.)
 - ViewPager2가 ViewPager에 비해 향상됨. 다만 RecyclerView처럼 adapter를 만들어서 거기서 실제 데이터랑 붙이는 식으로 사용함
 - PageTitleStrip (현재 어디 위치에 있는지 그림으로 보여주는것) - ViewPager2에서는 아직 지원을 하지 않아서 TabLayout을 우회해서 사용함. 
