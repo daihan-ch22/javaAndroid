@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     TextView textView;
     Button button;
     Button button2;
-    BackgroundThread thread;
+    //BackgroundThread thread;
     ValueHandler handler;
     ValueHandler handler2;
 
