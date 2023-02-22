@@ -157,6 +157,9 @@ putExtra() /
 <br><br>
 
 ### Fragment
+--> 하나의 전체화면 위에 보이는 부분화면을 만들때 사용
+
+
 - Activity처럼 xml과 Java파일이 한 쌍으로 연결 
 - java에서는 Fragment를 상속받고 onCreateView를 오버라이딩해서 재정의한다. 
 - 이 안에서 xml 만든것을 Inflation해서 리턴 시키면 콜백 함수가 된다. 
@@ -208,4 +211,30 @@ fragment를 추가하는데는 2가지 방법이 있음.
 ### ViewPager2
 - 프래그먼트를 스크롤하면서 보는 화면 (각각의 프래그먼트에 뷰를 설정해놓는다.)
 - ViewPager2가 ViewPager에 비해 향상됨. 다만 RecyclerView처럼 adapter를 만들어서 거기서 실제 데이터랑 붙이는 식으로 사용함
-- PageTitleStrip (현재 어디 위치에 있는지 그림으로 보여주는것) - ViewPager2에서는 아직 지원을 하지 않아서 TabLayout을 우회해서 사용함. 
+- PageTitleStrip (현재 어디 위치에 있는지 그림으로 보여주는것) - ViewPager2에서는 아직 지원을 하지 않아서 TabLayout을 우회해서 사용함. (네이버웹툰 월~금 목록 같이)
+
+[ViewPager2]
+Adapter -> extends FragmentStateAdapter
+Fragment -> extends Fragment (java file + xml file)
+
+```java
+        //TabLayoutMediator전에 반드시 ViewPager2에 adapter를 붙여줘야한다.
+        //.attach는 ViewPager2가 Adapter에 붙은 후에 사용가능하기 떄문 
+        new TabLayoutMediator(tabLayout, pager,
+                (tab, position) -> tab.setText("Tab " + (position+1))).attach();
+```
+<br><br>
+
+---
+
+
+## THREAD
+* Thread
+* MessageQueue
+* Handler
+
+Thread에서 UI객체에 동시에 접근하면 데드락 걸림. 이걸 해결하기 위해서 Main Thread안의 
+Handler를 사용해서 UI에 접근하려는 코드를 MessageQueue에 넣고 순차적으로 실행한다. 
+<br><br>
+자바의 Thread와 구현 방식이 약간 다르다. 
+
