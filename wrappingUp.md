@@ -227,18 +227,20 @@ Fragment -> extends Fragment (java file + xml file)
 
 ---
 
-# **THREAD**
+# **THREAD & HANDLER**
 * Thread
 * MessageQueue
 * Handler
 
-Thread에서 UI객체에 동시에 접근하면 데드락 걸림. 이걸 해결하기 위해서 Main Thread안의 
-Handler를 사용해서 UI에 접근하려는 코드를 MessageQueue에 넣고 순차적으로 실행한다. 
-<br><br>
+Thread에서 UI객체에 동시에 접근하면 데드락 걸림. 
+
 자바의 Thread와 구현 방식이 약간 다르다. 
 
-**!! 네트워크 관련 기능 사용시에는 반드시 Thread를 사용해야 한다. <br>
-**!! 그래서 네트워크로 UI업데이트를 하려면 Handler를 사용해야한다. 
+```
+네트워크 관련 기능 사용시에는 반드시 Thread를 사용해야 한다. 
+그래서 네트워크로 UI업데이트를 하려면 Handler를 사용해야한다.
+Main Thread에서만 UI 구성 요소에 접근이 가능하기 때문에 MessageQueue에 접근하려는 코드를 넣고 Handler가 순차적으로 요청을 보내서 실행  
+```
 
 <br>
 
@@ -246,17 +248,24 @@ Handler를 사용해서 UI에 접근하려는 코드를 MessageQueue에 넣고 �
 
 그래서 Volley나 Retrofit을 사용함. 근데 Retrofit이 성능상 제일 빠르다. 
 
+
+
+
 <br><br>
 
 # **VOLLEY**
-RequestQueue(한번만 만들면 됨) -> requestQueue에 request객체를 넣어줌 (알아서 쓰레드/핸들러 작업) -> ResponseListner(Request객체 만들때 안에 있음) <br><br>
+* RequestQueue(한번만 만들면 됨)
+* requestQueue에 request객체를 넣어줌 (알아서 쓰레드/핸들러 작업)
+* ResponseListner(Request객체 만들때 안에 있음) <br><br>
 
 - 보통 App안에서 구성을 하는것이 통상적
 
 ```java
-//Volley의 RequestQueue 만들어놓기 
-RequestQueue requestQueue =  Volley.newRequestQueue(getApplicationContext());
-
+/** Volley의 RequestQueue 만들어놓기 
+*   RequestQueue는 앱 시작때 초기화만하고 계속 사용할 수 있음. 매번 만들필요 X
+*   따라서 AppHelper같은 클래스를 만들어서 그 안에 static으로 정의해 글로벌로 사용 가능 
+*   RequestQueue requestQueue =  Volley.newRequestQueue(getApplicationContext());
+**/
 //StringRequest 객체에서 어떤 요청을 보낼껀지 정의를 하고나서 
 //해당 객체를 RequestQueue객체에 add한다
 StringRequest request = new StringRequest(Request.Method.GET,
@@ -273,8 +282,7 @@ StringRequest request = new StringRequest(Request.Method.GET,
                         println("error : " + error.getMessage());
                     }
                 })
-        //위에서 StringRequest로 요청할때 파라미터를 같이 전달하고 싶다면 아래처럼 { } 안에
-        // Request클래스의 getParams()를 오버라이딩
+        //위에서 StringRequest로 요청할때 POST처럼 특정 파라미터를 같이 전달하고 싶다면 아래처럼 { } 안에 Request클래스의 getParams()를 오버라이딩
         {
             @Nullable
             @Override

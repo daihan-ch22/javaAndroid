@@ -14,6 +14,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,10 +47,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     //Volley Request method
     public void sendRequest(){
-        String url = "https://google.com";
+        String url = "http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=f5eef3421c602c6cb7ea224104795888&targetDt=20120101";
         /**
          * Param:
          * 1st = HTTP Method type (GET,POST ...)
@@ -63,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         println("response : " + response);
+
+                        processResponse(response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -89,5 +91,19 @@ public class MainActivity extends AppCompatActivity {
 
     public void println(String data){
         textView.append(data + "\n");
+    }
+
+    public void processResponse(String response){
+        Gson gson = new Gson();
+
+        MovieList movieList = gson.fromJson(response, MovieList.class);
+
+        if(movieList != null){
+            int movieSize = movieList.boxOfficeResult.dailyBoxOfficeList.size();
+            println("boxoffice Type " + movieList.boxOfficeResult.boxofficeType);
+            println("movie counts : " + movieSize);
+
+
+        }
     }
 }
