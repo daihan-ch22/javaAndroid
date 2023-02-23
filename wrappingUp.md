@@ -2,43 +2,42 @@ KEYWORDS
 
 <br>
 
-## LAYOUT
-
-
-<br><br>
 
 ----
 
 
-## EVENT HANDLING
+# EVENT HANDLING
 
 * Event - Listner
 * Toast 
 * SnackBar
 * MotionEvent, KeyEvent, onTouchListner, onClickListner, onKeyListner...
 
+<br>
 
 
-<br><br>
 
-----
 
-## INFLATION 
+# INFLATION 
 
-foo.xml ------ CONNECT ------ foo_activity.java
+foo.xml ------ CONNECT ------ foo_activity.java <br>
 : xml파일을 메모리에 객체화(Inflate)해서 뷰로 만들고, 자바 소스에서 사용 가능하게 된다.
 
-* setContentView() / getSystemService(Context.LAYOUT_INFLATER_SERVICE)
+  setContentView() / getSystemService(Context.LAYOUT_INFLATER_SERVICE)
 
 ----
 
 <br><br>
 
-## LISTVIEW
+# LISTVIEW & RECYCLER VIEW
     ListView보다는 RecyclerView를 더 많이 사용함.
     다만 Adapter개념은 공유된다
 
-리스트뷰 자체는 껍데기이고 그 안의 데이터는 Adapter가 관리한다. 
+
+- 리스트뷰/리싸이클러뷰 자체는 '틀' 이고 그 안의 데이터는 Adapter에서 관리한다. 
+  - RecyclerView.xml 을 객체에 붙임 
+  - 뷰 리스트 하나에 들어갈 내용물 xml만들어서 인플레이션 해놓고 
+  - 연동
 
 * Adapter
 
@@ -53,7 +52,7 @@ foo.xml ------ CONNECT ------ foo_activity.java
 
 <br>
 
-### Activity
+## Activity
 
 * AndroidManifest.xml
 * Activity switching ----> Activity Stack
@@ -81,14 +80,15 @@ ActivityResultLauncher<Intent> resultLauncher = registerForActivityResult(
 
 
 <br><br>
-### Service
+
+## Service
 
 * startService() / onCreate() / onDestroy()
 * UI가 없다(안보임)
 
 <br><br>
 
-### Broadcast Receiver
+## Broadcast Receiver
 * 전화나 SMS메시지, 채팅 (전화 / 채팅이 왔습니다 == Global Event를 처리하기 위함) 
 * UI가 없다(안보임)
 * manifest에 등록을 해야 사용 가능 
@@ -140,11 +140,11 @@ private SmsMessage[] parseSmsMessage(Bundle bundle){
 
 <br><br>
 
-### Content Provider
+## Content Provider
 
 <br><br>
 
-### Intent
+## Intent
 
 putExtra() / 
 
@@ -156,7 +156,7 @@ putExtra() /
 
 <br><br>
 
-### Fragment
+## Fragment
 --> 하나의 전체화면 위에 보이는 부분화면을 만들때 사용
 
 
@@ -191,7 +191,7 @@ fragment를 추가하는데는 2가지 방법이 있음.
 - activity에서는 fragment객체를 바로 참조할 수 있음. 
 - 데이터를 받아오는 작업은 왠만하면 activity쪽에서 하는게 좋다. 
 
-
+<br><br>
 
 ### 안드로이드 메뉴는  옵션메뉴와 Context메뉴로 나눌 수 있다.
 
@@ -205,10 +205,10 @@ fragment를 추가하는데는 2가지 방법이 있음.
         return true;
     }
 ```
+<br>
 
 
-
-### ViewPager2
+# ViewPager2
 - 프래그먼트를 스크롤하면서 보는 화면 (각각의 프래그먼트에 뷰를 설정해놓는다.)
 - ViewPager2가 ViewPager에 비해 향상됨. 다만 RecyclerView처럼 adapter를 만들어서 거기서 실제 데이터랑 붙이는 식으로 사용함
 - PageTitleStrip (현재 어디 위치에 있는지 그림으로 보여주는것) - ViewPager2에서는 아직 지원을 하지 않아서 TabLayout을 우회해서 사용함. (네이버웹툰 월~금 목록 같이)
@@ -227,8 +227,7 @@ Fragment -> extends Fragment (java file + xml file)
 
 ---
 
-
-## THREAD
+# **THREAD**
 * Thread
 * MessageQueue
 * Handler
@@ -240,3 +239,51 @@ Handler를 사용해서 UI에 접근하려는 코드를 MessageQueue에 넣고 �
 
 **!! 네트워크 관련 기능 사용시에는 반드시 Thread를 사용해야 한다. <br>
 **!! 그래서 네트워크로 UI업데이트를 하려면 Handler를 사용해야한다. 
+
+<br>
+
+--> 귀찮다. <br><br>
+
+그래서 Volley나 Retrofit을 사용함. 근데 Retrofit이 성능상 제일 빠르다. 
+
+<br><br>
+
+# **VOLLEY**
+RequestQueue(한번만 만들면 됨) -> requestQueue에 request객체를 넣어줌 (알아서 쓰레드/핸들러 작업) -> ResponseListner(Request객체 만들때 안에 있음) <br><br>
+
+- 보통 App안에서 구성을 하는것이 통상적
+
+```java
+//Volley의 RequestQueue 만들어놓기 
+RequestQueue requestQueue =  Volley.newRequestQueue(getApplicationContext());
+
+//StringRequest 객체에서 어떤 요청을 보낼껀지 정의를 하고나서 
+//해당 객체를 RequestQueue객체에 add한다
+StringRequest request = new StringRequest(Request.Method.GET,
+                url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        println("response : " + response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        println("error : " + error.getMessage());
+                    }
+                })
+        //위에서 StringRequest로 요청할때 파라미터를 같이 전달하고 싶다면 아래처럼 { } 안에
+        // Request클래스의 getParams()를 오버라이딩
+        {
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                return params;
+            }
+        };
+        request.setShouldCache(false); //캐싱 false -> 이전 결과가 있더라도 새로 Request객체 만들기
+
+        AppHelper.requestQueue.add(request); // 보통 요청을 보냈다는 메시지는 여기서 출력해준다.
+        println("REQUEST SENT!");
