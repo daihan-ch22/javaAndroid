@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         notificationSettings.createNotificationChannel();
     }
 
+    //BUTTON INTERACTIONS
     private void buttonListener(){
 
         boolean isAlarmOn = alarmSettings.alarmCheck();
@@ -65,15 +66,12 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(binding.getRoot(), msg, Snackbar.LENGTH_SHORT).show();
             }
         });
-
         binding.nextTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String nextClock = alarmSettings.getNextClock();
                 Snackbar.make(view, nextClock, Snackbar.LENGTH_SHORT).show();
-
             }
         });
     }
-
 }
