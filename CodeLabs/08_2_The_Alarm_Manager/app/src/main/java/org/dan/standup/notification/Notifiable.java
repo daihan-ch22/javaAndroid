@@ -1,4 +1,4 @@
-package org.dan.standup;
+package org.dan.standup.notification;
 
 import android.content.Context;
 
@@ -6,7 +6,8 @@ interface Notifiable {
 
     void cancelNotification();
 
-    void deliverNotification(Context context);
+    //@Deprecated
+    //void deliverNotification(Context context);
 
     void createNotificationChannel();
 
