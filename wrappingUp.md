@@ -26,6 +26,34 @@ foo.xml ------ CONNECT ------ foo_activity.java <br>
   setContentView() / getSystemService(Context.LAYOUT_INFLATER_SERVICE)
 
 ----
+<br><br>
+
+# ViewBinding
+- 뷰를 사용하기 위해서는 액티비티에서 findViewById를 해서 가져와야 하는데 이렇게 되면 코드도 길어지고 귀찮다.
+- 따라서 ViewBinding이라는 것을 사용할 수 있음. 자매품으로 DataBinding도 있음. 
+
+```Java
+1. build.gradle(Module:app)에 
+    
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    } 
+    요 코드를 추가하고 sync gradle
+
+2. 그러면 '뷰이름'Binding이라는 객체로 뽑아주는데 이걸 OnCreate()에서 
+    '뷰이름'Binding.inflate(getLayoutInflater())으로 초기화해 변수에 할당
+
+
+3. View view = binding(위에서 할당한 변수명).getRoot()로 받음 그리고 setContentView(view); 를 하면 준비 끝
+
+4. 그 이후로는 binding.button2.setOnClickListner(new View.setOnClickListner()) 이렇게 바로 사용 가능 
+
+
+```
+
+
+
 
 <br><br>
 
@@ -39,7 +67,8 @@ foo.xml ------ CONNECT ------ foo_activity.java <br>
   - 뷰 리스트 하나에 들어갈 내용물 xml만들어서 인플레이션 해놓고 
   - 연동
 
-* Adapter
+* Adapter 
+  * 이게 메인이 된다. 
 
 
 -----
@@ -92,7 +121,12 @@ ActivityResultLauncher<Intent> resultLauncher = registerForActivityResult(
 * 전화나 SMS메시지, 채팅 (전화 / 채팅이 왔습니다 == Global Event를 처리하기 위함) 
 * UI가 없다(안보임)
 * manifest에 등록을 해야 사용 가능 
-* start activity/service처럼 따로 시작을 할 필요가 없음 -> manifest에 등록해놓으면 된다. 
+* start activity/service처럼 따로 시작을 할 필요가 없음 -> manifest에 등록해놓으면 된다. (방법1)
+* 
+* Programmatic하게 하려면 IntentFilter에 Actions을 등록(방법2), 그걸 RegisterReceiver을 통해 리시버에 등록
+  * Listner를 만들어서 리시버를 통해 액션을 받고 그걸 수행하도록 구현하는게 큰 그림 
+* 커스텀으로도 만들어서 사용 가능 (다운완료시, 특정시간시, 게임 이벤트 시간 등등)
+* Activity onDestroy에 꼭 unRegisterReceiver를 해줘야 메모리 누수 방지 
 
 ```xml
 <receiver
@@ -246,8 +280,12 @@ Main Thread에서만 UI 구성 요소에 접근이 가능하기 때문에 Messag
 
 --> 귀찮다. <br><br>
 
-그래서 Volley나 Retrofit을 사용함. 근데 Retrofit이 성능상 제일 빠르다. 
+AsyncTask로 쓸 수 있었는데 Deprecated되서 RxJava같은걸로 사용해야함.
 
+Volley나 retrofit2이 인터넷 활동시 이걸 편하게 해주는걸로 알고있는데 이부분은 확인 필요. (쓰레드랑 연관이 어떻게 있는지 )
+
+* View를 수정하는 것은 MainThread에서만 가능하고 그냥 subThread에서 수정하면 예외발생함 (중요)
+  * 이럴때 쓰는 방법이 runOnUiThread(new Runnable) 구현해서 이 내부의 run()안에서 뷰를 수정해야한다. 
 
 
 
@@ -295,3 +333,24 @@ StringRequest request = new StringRequest(Request.Method.GET,
 
         AppHelper.requestQueue.add(request); // 보통 요청을 보냈다는 메시지는 여기서 출력해준다.
         println("REQUEST SENT!");
+```
+<br><br>
+
+# Notification
+
+* API 26 (Oreo) 이상부터 무조건 최소 하나의 채널에 등록이 되야함 
+  
+### 키워드 
+```Java
+- NotificationManager
+- NotificationChannel
+- NotificationCompat.Builder (여기다가 설정 등록)
+- Intent
+- PendingIntent
+    - 알림이 떴을때 그걸 누르면 특정 동작을 해야할때 사용. 
+    - PendingIntent로 등록해놓으면 다른 앱으로 넘어가있더라도 다른앱에서의 Intent로써 작용하도록 사전에 확정해놓는 개념인거 같음.
+```
+
+
+<br><br>
+
